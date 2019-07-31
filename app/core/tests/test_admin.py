@@ -2,6 +2,7 @@ from django.test import TestCase, Client
 from django.contrib.auth import get_user_model
 from django.urls import reverse
 
+
 class AdminSiteTests(TestCase):
     def setUp(self):
         self.client = Client()
@@ -13,12 +14,12 @@ class AdminSiteTests(TestCase):
         # useful for testing
         self.client.force_login(self.admin_user)
 
-        self.user= get_user_model().objects.create_user(
+        self.user = get_user_model().objects.create_user(
             email='test@google.com',
             password='password123',
             name='Test Name'
         )
-    
+
     def test_users_listed(self):
         """Test that users are listed on user page in admin"""
         # this relative url link is included in admin by default
@@ -32,11 +33,11 @@ class AdminSiteTests(TestCase):
 
     def test_user_change_page(self):
         """Test the the user edit page works"""
-        # test that the fields are correctly displayed in the user 
+        # test that the fields are correctly displayed in the user
         # detail edit page in admin
         url = reverse('admin:core_user_change', args=[self.user.id])
         response = self.client.get(url)
-        
+
         # check if page ok, since status 200 means page is OK
         self.assertEqual(response.status_code, 200)
 
