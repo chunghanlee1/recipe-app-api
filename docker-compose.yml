@@ -23,5 +23,5 @@ services:
     environment:
       - POSTGRES_DB=app
       - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=supersecretpassword #do not post password here in actual deployment
+      - POSTGRES_PASSWORD=supersecretpassword
 
