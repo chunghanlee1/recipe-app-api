@@ -22,10 +22,10 @@ class ManageUserView(generics.RetrieveUpdateAPIView):
 
     # specify the mechanism by which authentication occurs
     authentication_classes = (authentication.TokenAuthentication,)
-    permissions_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
 
     # override the original method which would retrieve database model
-    # instead, it uses the TokenAuthentication process to get 
+    # instead, it uses the TokenAuthentication process to get
     # the user being authenticated
     def get_object(self):
         """Retrieve and return authenticated user"""
