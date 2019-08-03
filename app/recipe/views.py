@@ -12,7 +12,7 @@ class BaseRecipeAttrViewSet(viewsets.GenericViewSet,
     """Base viewset for user owned recipe attrs"""
     authentication_classes = (TokenAuthentication,)
     permission_classes = (IsAuthenticated,)
-    
+
     # A user must be authenticated to invoke this function
     # From ListModelMixin
     def get_queryset(self):
