@@ -182,7 +182,7 @@ class PrivateRecipeApiTests(TestCase):
         payload = {
             'title': 'Speghatti',
             'time_minutes': 25,
-            # cast to avoid data type issues in assertion 
+            # cast to avoid data type issues in assertion
             'price': Decimal('4.85')
         }
         url = detail_url(recipe.id)
