@@ -3,6 +3,7 @@ from django.test import TestCase
 from django.urls import reverse
 from rest_framework import status
 from rest_framework.test import APIClient
+from decimal import Decimal
 from core.models import Recipe, Tag, Ingredient
 from recipe.serializers import RecipeSerializer, RecipeDetailSerializer
 
@@ -146,7 +147,7 @@ class PrivateRecipeApiTests(TestCase):
             'title': 'Prawn',
             'ingredients': [ingredient1.id, ingredient2.id],
             'time_minutes': 10,
-            'price': 7.00
+            'price': Decimal('7.23')
         }
         res = self.client.post(RECIPE_URL, payload)
 
@@ -181,7 +182,8 @@ class PrivateRecipeApiTests(TestCase):
         payload = {
             'title': 'Speghatti',
             'time_minutes': 25,
-            'price': 5.00
+            # cast to avoid data type issues in assertion 
+            'price': Decimal('4.85')
         }
         url = detail_url(recipe.id)
         self.client.put(url, payload)
