@@ -8,6 +8,7 @@ from recipe.serializers import RecipeSerializer, RecipeDetailSerializer
 
 RECIPE_URL = reverse('recipe:recipe-list')
 
+
 def detail_url(recipe_id):
     """Return recipe detail url"""
     return reverse('recipe:recipe-detail', args=[recipe_id])
@@ -39,14 +40,15 @@ def sample_recipe(user, **params):
 
 class PublicRecipeApiTests(TestCase):
     """Test unauthenticated recipe API access"""
-    
+
     def setUp(self):
         self.client = APIClient()
-    
+
     def test_authentication_required(self):
         """Test authentication req"""
         res = self.client.get(RECIPE_URL)
         self.assertEqual(res.status_code, status.HTTP_401_UNAUTHORIZED)
+
 
 class PrivateRecipeApiTests(TestCase):
     """Test unauthenticated recipe API access"""
@@ -66,7 +68,7 @@ class PrivateRecipeApiTests(TestCase):
 
         res = self.client.get(RECIPE_URL)
 
-        recipes = Recipe.objects.all().order_by('name')
+        recipes = Recipe.objects.all().order_by('-id')
         serializer = RecipeSerializer(recipes, many=True)
         self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(res.data, serializer.data)
@@ -80,12 +82,12 @@ class PrivateRecipeApiTests(TestCase):
         sample_recipe(user=user2)
         sample_recipe(user=self.user)
 
-        res = self.client.get(RECUPE_URL)
+        res = self.client.get(RECIPE_URL)
 
         recipes = Recipe.objects.filter(user=self.user)
         serializer = RecipeSerializer(recipes, many=True)
 
-        self.assertEqual(res.status_code, status_HTTP_200_OK)
+        self.assertEqual(res.status_code, status.HTTP_200_OK)
         self.assertEqual(len(res.data), 1)
         self.assertEqual(res.data, serializer.data)
 
@@ -94,7 +96,7 @@ class PrivateRecipeApiTests(TestCase):
         recipe = sample_recipe(user=self.user)
         # .add() method to add an item for many to many field
         recipe.tags.add(sample_tag(user=self.user))
-        recipe.ingredient.add(sample_ingredient(user=self.user))
+        recipe.ingredients.add(sample_ingredient(user=self.user))
 
         url = detail_url(recipe.id)
         res = self.client.get(url)
@@ -191,11 +193,3 @@ class PrivateRecipeApiTests(TestCase):
         self.assertEqual(recipe.price, payload['price'])
         tags = recipe.tags.all()
         self.assertEqual(len(tags), 0)
-
-
-
-
-
-
-
-
