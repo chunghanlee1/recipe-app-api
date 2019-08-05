@@ -51,6 +51,7 @@ class RecipeViewSet(viewsets.ModelViewSet):
     def get_serializer_class(self):
         """Change serializer class depending on the action
         (i.e. list or details)"""
+        # recall that in viewset, retrieve is the detail view
         if self.action == 'retrieve':
             return serializers.RecipeDetailSerializer
         return self.serializer_class

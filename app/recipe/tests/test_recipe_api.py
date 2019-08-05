@@ -128,7 +128,7 @@ class PrivateRecipeApiTests(TestCase):
             'title': 'Cheesecake',
             'tags': [tag1.id, tag2.id],
             'time_minutes': 30,
-            'price': 5.00
+            'price': Decimal('5.02')
         }
         res = self.client.post(RECIPE_URL, payload)
 
