@@ -3,8 +3,9 @@ from django.urls import reverse
 from django.test import TestCase
 from rest_framework import status
 from rest_framework.test import APIClient
-from core.models import Ingredient
+from core.models import Ingredient, Recipe
 from recipe.serializers import IngredientSerializer
+from decimal import Decimal
 
 
 INGREDIENTS_URL = reverse('recipe:ingredient-list')
